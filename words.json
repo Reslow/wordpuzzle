@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "startWord": "FOUR",
+    "endWord": "FIVE"
+  },
+  {
+    "id": 2,
+    "startWord": "EYE",
+    "endWord": "LID"
+  },
+  {
+    "id": 3,
+    "startWord": "TIGER",
+    "endWord": "ROSES"
+  },
+  {
+    "id": 4,
+    "startWord": "WHEAT",
+    "endWord": "BREAD"
+  }
+]
