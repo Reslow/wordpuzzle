@@ -10,26 +10,25 @@ async function getWords() {
 }
 
 function getrandomwords(data) {
-  // data is array with wordpairs
-  //  get random wordpair from the list
   let words = data[Math.floor(Math.random() * data.length)];
   pairOfWords(words);
   createInput(words);
 }
 
 function createInput(words) {
-  let inputfield = document.createElement("input");
-  let btn = document.createElement("button");
-  inputfield.setAttribute("maxlength", words.startWord.length);
-
-  btn.innerHTML = "add";
-  btn.setAttribute("type", "button");
-  form.appendChild(inputfield);
-  form.appendChild(btn);
-
-  btn.addEventListener("click", () => {
+  let number = words.startWord.length;
+  for (let i = 0; i < number; i++) {
+    let inputfield = document.createElement("input");
+    inputfield.setAttribute("maxlength", 1);
+    form.appendChild(inputfield);
     checkInput(inputfield.value, words);
-  });
+  }
+
+  let btn = document.createElement("button");
+  btn.innerHTML = "try";
+  btn.setAttribute("type", "button");
+  form.appendChild(btn);
+  btn.addEventListener("click", () => {});
 }
 
 function checkInput(value, words) {
@@ -48,8 +47,13 @@ function hasWordChanged(startwordArray, inputarray) {
   console.log(inputarray);
 
   for (let i = 0; i < startwordArray.length; i++) {
-    if (startwordArray[i] === inputarr) console.log(startwordArray[i]);
-    console.log(inputarray[i]);
+    if (startwordArray[i] !== inputarray[i]) {
+      console.log(startwordArray[i]);
+      console.log(inputarray[i]);
+      console.log("mismatch");
+    } else {
+      console.log("we have a mtach");
+    }
   }
 }
 
@@ -59,4 +63,12 @@ function pairOfWords(words) {
   endW.innerText = words.endWord;
 }
 
+function handleInput(e) {
+  // check for data that was inputtted and if there is a next input, focus it
+  const input = e.target;
+  if (input.nextElementSibling && input.value) {
+    input.nextElementSibling.focus();
+  }
+}
 getWords();
+form.addEventListener("input", handleInput);
