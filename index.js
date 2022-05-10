@@ -4,6 +4,8 @@ let endW = document.getElementById("endW");
 let form = document.getElementById("form");
 let inputCon = document.getElementById("input--con");
 let newGame = document.getElementById("newGame--btn");
+let btn = document.getElementById("btn");
+
 let presentWords = document.getElementById("presentWords--section");
 
 // fetch words from words.json
@@ -52,8 +54,6 @@ function playNewRound() {
 }
 
 function win(word, words) {
-  console.log(word);
-  console.log(words);
   word = word.toUpperCase();
   if (word === words.endWord) {
     console.log("GAME is WON");
@@ -62,6 +62,7 @@ function win(word, words) {
 
 // turn value of inpuit to uppercases, then turn strings to arrays and compare them
 function playWord(word, words) {
+  console.log("playwords");
   console.log(word);
   let h3 = document.createElement("h3");
   h3.innerHTML = word;
@@ -75,11 +76,9 @@ function checkWord(word, words) {
   // from str to array
   let startwordinArray = words.startWord.split("");
   let inputArray = valueUpper.split("");
-  console.log(startwordinArray);
-  console.log(inputArray);
 
   let included = inputArray.filter((x) => startwordinArray.includes(x));
-  console.log(`included ${included}`);
+
   if (included > 1) {
     console.log("you may only change one letter at a time");
   } else {
@@ -95,7 +94,6 @@ async function isitaword(word, words) {
       throw new Error(`${response.status}`);
     } else {
       let data = await response.json();
-      console.log(data);
       checkWord(word, words);
       return data;
     }
