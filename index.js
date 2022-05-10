@@ -24,8 +24,6 @@ function getrandomwords(data) {
 // create inputfields from numbers of letters
 
 function createInput(words) {
-  console.log(words);
-  let inputvalue = "";
   let number = words.startWord.length;
   //  for each letter create input
   for (let i = 0; i < number; i++) {
@@ -42,49 +40,50 @@ function createInput(words) {
   btn.classList.add("btn");
   form.appendChild(btn);
   btn.addEventListener("click", () => {
-    console.log("click");
     let input = document.getElementsByClassName("input");
-    console.log(input);
     let word = "";
     for (item of input) {
       word += item.value;
-      console.log(item.value);
-      checkInput(word, words);
+      isitaword(word, words);
+      input.value += "";
     }
   });
 }
 
 // turn value of inpuit to uppercases, then turn strings to arrays and compare them
-function checkInput(inputvalue, words) {
+
+function checkWord(word, words) {
   // to uppercases
-  let valueUpper = inputvalue.toUpperCase();
+  let valueUpper = word.toUpperCase();
   // from str to array
   let startwordinArray = words.startWord.split("");
   let inputArray = valueUpper.split("");
-
   console.log(startwordinArray);
   console.log(inputArray);
 
-  isitaword(inputvalue);
+  let included = inputArray.filter((x) => startwordinArray.includes(x));
+  console.log(`included ${included}`);
+  if (included > 1) {
+    console.log("you may only change one letter at a time");
+  }
 }
 
-async function isitaword(word) {
+async function isitaword(word, words) {
   try {
-    const response = fetch(
+    const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
     );
-
     if (!response.ok) {
-      throw new Error(`error ${response.status}`);
+      throw new Error(`${response.status}`);
     } else {
       let data = await response.json();
       console.log(data);
+      checkWord(word, words);
+      return data;
     }
-
-    return data;
   } catch (err) {
     console.log(err);
-    console.log("word does not exist");
+    console.log("not a valid word!");
   }
 }
 
