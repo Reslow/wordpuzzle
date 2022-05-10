@@ -2,12 +2,12 @@
 let startW = document.getElementById("startW");
 let endW = document.getElementById("endW");
 let form = document.getElementById("form");
+let inputCon = document.getElementById("input--con");
 
 // fetch words from words.json
 async function getWords() {
   let response = await fetch("/words.json");
   const data = await response.json();
-  console.log(data);
   getrandomwords(data);
 }
 
@@ -24,40 +24,67 @@ function getrandomwords(data) {
 // create inputfields from numbers of letters
 
 function createInput(words) {
+  console.log(words);
+  let inputvalue = "";
   let number = words.startWord.length;
   //  for each letter create input
   for (let i = 0; i < number; i++) {
     let inputfield = document.createElement("input");
     inputfield.setAttribute("maxlength", 1);
-    form.appendChild(inputfield);
+    inputCon.appendChild(inputfield);
+    inputfield.classList.add("input");
   }
+
   // create a btn
   let btn = document.createElement("button");
   btn.innerHTML = "try";
   btn.setAttribute("type", "button");
+  btn.classList.add("btn");
   form.appendChild(btn);
   btn.addEventListener("click", () => {
     console.log("click");
-    checkInput(inputfield.value, words);
+    let input = document.getElementsByClassName("input");
+    console.log(input);
+    let word = "";
+    for (item of input) {
+      word += item.value;
+      console.log(item.value);
+      checkInput(word, words);
+    }
   });
 }
 
 // turn value of inpuit to uppercases, then turn strings to arrays and compare them
-function checkInput(value, words) {
-  // to uppercases and str into arrays
-  let valueUpper = value.toUpperCase();
+function checkInput(inputvalue, words) {
+  // to uppercases
+  let valueUpper = inputvalue.toUpperCase();
+  // from str to array
   let startwordinArray = words.startWord.split("");
   let inputArray = valueUpper.split("");
 
-  // go through the listsand compare each letter if they matches
-  for (let i = 0; i < startwordinArray.length; i++) {
-    if (startwordinArray[i] !== inputArray[i]) {
-      console.log(startwordinArray[i]);
-      console.log(inputArray[i]);
-      console.log("mismatch");
+  console.log(startwordinArray);
+  console.log(inputArray);
+
+  isitaword(inputvalue);
+}
+
+async function isitaword(word) {
+  try {
+    const response = fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`
+    );
+
+    if (!response.ok) {
+      throw new Error(`error ${response.status}`);
     } else {
-      console.log("we have a match");
+      let data = await response.json();
+      console.log(data);
     }
+
+    return data;
+  } catch (err) {
+    console.log(err);
+    console.log("word does not exist");
   }
 }
 
