@@ -3,6 +3,7 @@ let startW = document.getElementById("startW");
 let endW = document.getElementById("endW");
 let form = document.getElementById("form");
 let inputCon = document.getElementById("input--con");
+let presentWords = document.getElementById("presentWords--section");
 
 // fetch words from words.json
 async function getWords() {
@@ -17,7 +18,6 @@ function getrandomwords(data) {
   // display words in html
   startW.innerText = words.startWord;
   endW.innerText = words.endWord;
-
   createInput(words);
 }
 
@@ -43,13 +43,19 @@ function createInput(words) {
     let word = "";
     for (item of input) {
       word += item.value;
-      isitaword(word, words);
       item.value = "";
     }
+    isitaword(word, words);
   });
 }
 
 // turn value of inpuit to uppercases, then turn strings to arrays and compare them
+function playWord(word) {
+  console.log(word);
+  let h3 = document.createElement("h3");
+  h3.innerHTML = word;
+  presentWords.appendChild(h3);
+}
 
 function checkWord(word, words) {
   // to uppercases
@@ -64,9 +70,10 @@ function checkWord(word, words) {
   console.log(`included ${included}`);
   if (included > 1) {
     console.log("you may only change one letter at a time");
+  } else {
+    playWord(word);
   }
 }
-
 async function isitaword(word, words) {
   try {
     const response = await fetch(
