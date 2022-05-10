@@ -3,6 +3,7 @@ let startW = document.getElementById("startW");
 let endW = document.getElementById("endW");
 let form = document.getElementById("form");
 let inputCon = document.getElementById("input--con");
+let newGame = document.getElementById("newGame--btn");
 let presentWords = document.getElementById("presentWords--section");
 
 // fetch words from words.json
@@ -33,11 +34,7 @@ function createInput(words) {
     inputfield.classList.add("input");
   }
   // create a btn
-  let btn = document.createElement("button");
-  btn.innerHTML = "try";
-  btn.setAttribute("type", "button");
-  btn.classList.add("btn");
-  form.appendChild(btn);
+
   btn.addEventListener("click", () => {
     let input = document.getElementsByClassName("input");
     let word = "";
@@ -49,12 +46,27 @@ function createInput(words) {
   });
 }
 
+function playNewRound() {
+  inputCon.querySelectorAll("input").forEach((n) => n.remove());
+  getWords();
+}
+
+function win(word, words) {
+  console.log(word);
+  console.log(words);
+  word = word.toUpperCase();
+  if (word === words.endWord) {
+    console.log("GAME is WON");
+  }
+}
+
 // turn value of inpuit to uppercases, then turn strings to arrays and compare them
-function playWord(word) {
+function playWord(word, words) {
   console.log(word);
   let h3 = document.createElement("h3");
   h3.innerHTML = word;
   presentWords.appendChild(h3);
+  win(word, words);
 }
 
 function checkWord(word, words) {
@@ -71,7 +83,7 @@ function checkWord(word, words) {
   if (included > 1) {
     console.log("you may only change one letter at a time");
   } else {
-    playWord(word);
+    playWord(word, words);
   }
 }
 async function isitaword(word, words) {
@@ -103,5 +115,9 @@ function handleInput(e) {
 
 // listen for input
 form.addEventListener("input", handleInput);
+
+// listen for newGame
+
+newGame.addEventListener("click", playNewRound);
 
 getWords();
