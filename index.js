@@ -32,7 +32,6 @@ function createInput(words) {
     inputCon.appendChild(inputfield);
     inputfield.classList.add("input");
   }
-
   // create a btn
   let btn = document.createElement("button");
   btn.innerHTML = "try";
@@ -45,7 +44,7 @@ function createInput(words) {
     for (item of input) {
       word += item.value;
       isitaword(word, words);
-      input.value += "";
+      item.value = "";
     }
   });
 }
