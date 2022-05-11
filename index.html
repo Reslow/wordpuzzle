@@ -8,19 +8,52 @@
     <title>Word puzzle</title>
   </head>
   <body>
-    <h2>from one word to another, one move at a time!</h2>
-
+    <h2>From one word to another, one move at a time!</h2>
     <button id="newGame--btn">new Game</button>
 
-    <h1>startword <span id="startW"></span></h1>
+    <section id="gamefield">
+      <section id="instructions">
+        <section id="rules">
+          <h2>REGLER</h2>
+          <p>
+            Pusslet går ut på att du får ett startord och ett slutord och du ska
+            genom att byta ut bokstäver i ditt startord få det till ditt slutord
+            med så få byten som möjligt.
+          </p>
+          <p>
+            Regler Du får enbart byta ut en bokstav åt gången. Varje ord som
+            bildas måste vara ett korrekt engelskt ord.
+          </p>
 
-    <form id="form">
-      <section id="presentWords--section"></section>
-      <section id="input--con"></section>
-      <button id="btn" type="button">play word</button>
-    </form>
+          <p>
+            <h3> Exempel </h3>
+            I detta exempel så ska vi få four att bli five. Observera att själva
+            spelet är på engelska.
+          </p>
+          <ul>
+            <li>FOUR (startord)</li>
+            <li>FOUL (Bytte ut R till L)</li>
+            <li>FOOL (Bytte ut U till O)</li>
+            <li>FOOT (Bytte ut L till T)</li>
+            <li>FORT (Bytte ut O till R)</li>
+            <li>FORE (Bytte ut T till E)</li>
+            <li>FIRE (Bytte ut O till I)</li>
+            <li>FIVE (Slutord)</li>
+          </ul>
+        </section>
+      </section>
+      <section id="game">
+        <section id="message"></section>
+        <h1>startword <span id="startW"></span></h1>
+        <form id="form">
+          <section id="presentWords--section"></section>
+          <section id="input--con"></section>
+          <button id="btn" type="button">play word</button>
+        </form>
 
-    <h1>Endword <span id="endW"></span></h1>
+        <h1>Endword <span id="endW"></span></h1>
+      </section>
+    </section>
 
     <script src="/index.js"></script>
   </body>
